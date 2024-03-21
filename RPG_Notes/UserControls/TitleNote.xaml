@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="RPG_Notes.UserControls.TitleNote"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RPG_Notes.UserControls" d:DataContext="{d:DesignInstance Type=local:TitleNote}"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.4*" />
+            <RowDefinition Height="0.60*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Text="{Binding Placeholder}" FontSize="24"></TextBlock>
+
+        <local:EnterNote Grid.Row="1" />
+    </Grid>
+</UserControl>
