@@ -8,13 +8,13 @@
              d:DesignHeight="100" d:DesignWidth="400">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.4*" />
-            <RowDefinition Height="0.60*"/>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
 
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Text="{Binding Placeholder}" FontSize="24"></TextBlock>
+                   Text="{Binding ListNotes.ListInfo.Name}" FontSize="28"></TextBlock>
 
-        <local:EnterNote Grid.Row="1" />
+        <local:EnterNote x:Name="EnterNote" Grid.Row="1" />
     </Grid>
 </UserControl>

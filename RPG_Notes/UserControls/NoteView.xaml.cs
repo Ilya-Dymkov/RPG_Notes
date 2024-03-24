@@ -1,4 +1,4 @@
-﻿using RPG_Notes.ObservableCollections;
+﻿using RPG_Notes.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
@@ -6,28 +6,26 @@ using System.Windows.Controls;
 namespace RPG_Notes.UserControls;
 
 /// <summary>
-/// Interaction logic for TitleNote.xaml
+/// Interaction logic for NoteView.xaml
 /// </summary>
-public partial class TitleNote : UserControl, INotifyPropertyChanged
+public partial class NoteView : UserControl, INotifyPropertyChanged
 {
-    public TitleNote()
+    public NoteView()
     {
         DataContext = this;
         InitializeComponent();
     }
 
+    private Note thisNote;
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private ObservableListNotes listNotes;
-
-    public ObservableListNotes ListNotes
+    public Note ThisNote
     {
-        get { return listNotes; }
+        get { return thisNote; }
         set
         {
-            listNotes = value;
-            EnterNote.ListNotes = listNotes;
-
+            thisNote = value;
             OnPropertyChanged();
         }
     }

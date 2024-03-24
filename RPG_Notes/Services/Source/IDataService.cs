@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace RPG_Notes.Services.Source;
 
-public interface IDbService<TKey, TValue>
+public interface IDataService<TKey, TValue>
 {
-    IAsyncEnumerable<TKey> GetAllAsync();
+    IAsyncEnumerable<TValue> GetAllAsync();
     Task<TValue> GetAsync(TKey key);
     Task AddAsync(TValue value);
     Task UpdateAsync(TValue value);

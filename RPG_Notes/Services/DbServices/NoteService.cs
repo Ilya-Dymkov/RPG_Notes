@@ -8,13 +8,11 @@ using System.Threading.Tasks;
 
 namespace RPG_Notes.Services.DbServices;
 
-public class NoteService : IDbService<int, Note>
+public class NoteService : IDataService<int, Note>
 {
-    public static NoteService Instance { get; } = new();
-
-    public IAsyncEnumerable<int> GetAllAsync()
+    public IAsyncEnumerable<Note> GetAllAsync()
     {
-        return DataDbContext.Instance.Notes.ToAsyncEnumerable().Select(n => n.Id);
+        return DataDbContext.Instance.Notes.ToAsyncEnumerable();
     }
 
     public async Task<Note> GetAsync(int key)
@@ -29,7 +27,7 @@ public class NoteService : IDbService<int, Note>
     }
 
     public async Task AddAsync(int listId, string text) =>
-        await AddAsync(new(await GetAllAsync().LastOrDefaultAsync() + 1, listId, text));
+        await AddAsync(new(((await GetAllAsync().LastOrDefaultAsync())?.Id ?? 0) + 1, listId, text));
 
     public async Task UpdateAsync(Note value)
     {

@@ -3,27 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RPG_Notes.UserControls" d:DataContext="{d:DesignInstance Type=local:TitleNote}"
+             xmlns:local="clr-namespace:RPG_Notes.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="65" d:DesignWidth="400">
+             d:DesignHeight="50" d:DesignWidth="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="30" />
             <ColumnDefinition Width="30" />
         </Grid.ColumnDefinitions>
-        
+
         <TextBox Name="txtInput" VerticalContentAlignment="Center"
                  FontSize="22" FontWeight="Light" Background="Transparent"
                  TextChanged="txtInput_TextChanged" />
-        <TextBlock Name="tbPlaceholder" Text="Enter Note" FontSize="22" FontWeight="Light"
+        <TextBlock Name="tbPlaceholder" Text="Enter note" FontSize="22" FontWeight="Light"
                    VerticalAlignment="Center" Margin="5 0 0 0" Panel.ZIndex="-1" />
 
-        <Button Grid.Column="1" Name="btnAdd" Content="+" FontSize="20"
+        <Button Grid.Column="1" Name="btnAdd" Content="+" FontSize="30"
                 Background="CadetBlue" Foreground="Snow" BorderThickness="0"
                 Click="btnAdd_Click"/>
 
-        <Button Grid.Column="2" Name="btnClear" Content="X" FontSize="14"
+        <Button Grid.Column="2" Name="btnClear" Content="x" FontSize="28"
                 Background="LightPink" Foreground="DarkSlateBlue" BorderThickness="0"
                 Click="btnClear_Click" />
     </Grid>

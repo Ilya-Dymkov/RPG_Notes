@@ -1,4 +1,4 @@
-﻿using RPG_Notes.Services.DbServices;
+﻿using RPG_Notes.ObservableCollections;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,11 +14,14 @@ public partial class EnterNote : UserControl
         InitializeComponent();
     }
 
+    public ObservableListNotes ListNotes { get; set; }
+
     private async void btnAdd_Click(object sender, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(txtInput.Text))
-            await NoteService.Instance.AddAsync(1, txtInput.Text);
+            await ListNotes.AddAsync(ListNotes.ListInfo.Id, txtInput.Text);
 
+        txtInput.Clear();
         txtInput.Focus();
     }
 
