@@ -5,8 +5,6 @@ namespace RPG_Notes.Data;
 
 public class DataDbContext : DbContext
 {
-    public static DataDbContext Instance { get; } = new();
-
     private static readonly string _connectionString = "server=localhost;database=rpg_notes;user=root;password=987412365";
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -16,4 +14,5 @@ public class DataDbContext : DbContext
     }
 
     public DbSet<Note> Notes { get; set; }
+    public DbSet<ListNotes> ListNotes { get; set; }
 }

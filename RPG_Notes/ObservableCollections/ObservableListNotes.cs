@@ -1,5 +1,5 @@
 ﻿using RPG_Notes.Models;
-using RPG_Notes.Services.DbServices;
+using RPG_Notes.Services.DataService;
 using RPG_Notes.Services.Source;
 using RPG_Notes.UserControls;
 using System.Collections.Generic;
@@ -22,45 +22,44 @@ public class ObservableListNotes : IDataService<int, Note>
     public ListNotes ListInfo { get; }
     public ObservableCollection<NoteView> Notes { get; }
 
-    private readonly NoteService _noteService = new();
+    private readonly NoteService _service = new();
 
     private async void FillNotes()
     {
-        await foreach (var note in _noteService.GetAllAsync()
+        await foreach (var note in _service.GetAllAsync()
                                                .Where(n => n.ListId == ListInfo.Id))
             Notes.Add(new() { ThisNote = note });
     }
 
-    public IAsyncEnumerable<Note> GetAllAsync()
+    public IAsyncEnumerable<Note> GetAllAsync() =>
+        _service.GetAllAsync();
+
+    public async Task<Note?> GetAsync(int key) =>
+        await _service.GetAsync(key);
+
+    public async Task AddAsync(Note value)
     {
-        return _noteService.GetAllAsync();
+        var task = _service.AddAsync(value);
+        Notes.Add(new() { ThisNote = value });
+        await task;
     }
 
     public async Task AddAsync(int listId, string text) =>
         await AddAsync(new(((await GetAllAsync().LastOrDefaultAsync())?.Id ?? 0) + 1, listId, text));
 
-    public async Task<Note> GetAsync(int key)
-    {
-        return await _noteService.GetAsync(key);
-    }
-
-    public async Task AddAsync(Note value)
-    {
-        var task = _noteService.AddAsync(value);
-        Notes.Add(new() { ThisNote = value });
-        await task;
-    }
-
     public async Task UpdateAsync(Note value)
     {
-        var task = _noteService.UpdateAsync(value);
+        var task = _service.UpdateAsync(value);
         Notes[Notes.IndexOf(Notes.First(n => n.ThisNote.Id == value.Id))] = new() { ThisNote = value };
         await task;
     }
 
+    public async Task UpdateAsync(int id, int listId, string text) =>
+        await UpdateAsync(new(id, listId, text));
+
     public async Task RemoveAsync(int key)
     {
-        var task = _noteService.RemoveAsync(key);
+        var task = _service.RemoveAsync(key);
         Notes.Remove(Notes.First(n => n.ThisNote.Id == key));
         await task;
     }

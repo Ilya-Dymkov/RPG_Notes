@@ -22,7 +22,7 @@ public partial class TitleNote : UserControl, INotifyPropertyChanged
 
     public ObservableListNotes ListNotes
     {
-        get { return listNotes; }
+        get => listNotes;
         set
         {
             listNotes = value;
@@ -32,8 +32,6 @@ public partial class TitleNote : UserControl, INotifyPropertyChanged
         }
     }
 
-    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }

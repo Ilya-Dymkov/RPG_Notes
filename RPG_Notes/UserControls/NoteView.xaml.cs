@@ -22,7 +22,7 @@ public partial class NoteView : UserControl, INotifyPropertyChanged
 
     public Note ThisNote
     {
-        get { return thisNote; }
+        get => thisNote;
         set
         {
             thisNote = value;
@@ -30,8 +30,6 @@ public partial class NoteView : UserControl, INotifyPropertyChanged
         }
     }
 
-    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }

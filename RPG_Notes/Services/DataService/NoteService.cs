@@ -6,24 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RPG_Notes.Services.DbServices;
+namespace RPG_Notes.Services.DataService;
 
 public class NoteService : IDataService<int, Note>
 {
-    public IAsyncEnumerable<Note> GetAllAsync()
-    {
-        return DataDbContext.Instance.Notes.ToAsyncEnumerable();
-    }
+    private readonly DataDbContext _dbContext = new();
 
-    public async Task<Note> GetAsync(int key)
-    {
-        return await DataDbContext.Instance.Notes.FirstAsync(n => n.Id == key);
-    }
+    public IAsyncEnumerable<Note> GetAllAsync() =>
+        _dbContext.Notes.AsAsyncEnumerable();
+
+    public async Task<Note?> GetAsync(int key) =>
+        await _dbContext.Notes.FindAsync(key);
 
     public async Task AddAsync(Note value)
     {
-        await DataDbContext.Instance.Notes.AddAsync(value);
-        await DataDbContext.Instance.SaveChangesAsync();
+        await _dbContext.Notes.AddAsync(value);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task AddAsync(int listId, string text) =>
@@ -31,10 +29,10 @@ public class NoteService : IDataService<int, Note>
 
     public async Task UpdateAsync(Note value)
     {
-        var note = await DataDbContext.Instance.Notes.FindAsync(value.Id);
+        var note = await GetAsync(value.Id);
 
         if (note != null)
-            DataDbContext.Instance.Notes.Remove(note);
+            _dbContext.Notes.Remove(note);
 
         await AddAsync(value);
     }
@@ -44,12 +42,12 @@ public class NoteService : IDataService<int, Note>
 
     public async Task RemoveAsync(int key)
     {
-        var note = await DataDbContext.Instance.Notes.FindAsync(key);
+        var note = await GetAsync(key);
 
         if (note != null)
         {
-            DataDbContext.Instance.Notes.Remove(note);
-            await DataDbContext.Instance.SaveChangesAsync();
+            _dbContext.Notes.Remove(note);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
