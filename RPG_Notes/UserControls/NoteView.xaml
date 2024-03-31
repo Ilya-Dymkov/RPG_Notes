@@ -5,15 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RPG_Notes.UserControls" d:DataContext="{d:DesignInstance Type=local:NoteView}"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="300">
+             d:DesignHeight="50" d:DesignWidth="400">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="340" />
             <ColumnDefinition Width="30" />
             <ColumnDefinition Width="30" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{Binding ThisNote.Text}" FontSize="18"
-                   VerticalAlignment="Center" />
+        <TextBox x:Name="tbTextNote" Text="{Binding ThisNote.Text}"
+                 FontSize="18" IsReadOnly="True"
+                 Background="Transparent" Padding="12" BorderThickness="2"
+                 VerticalAlignment="Center"
+                 TextChanged="tbTextNote_TextChanged"/>
+
+        <Button Grid.Column="1" Name="btnChange" Content="◎" FontSize="28"
+        Background="CadetBlue" Foreground="Snow" BorderThickness="0" Opacity="0.6"
+        Click="btnChange_Click"/>
+
+        <Button Grid.Column="2" Name="btnDelete" Content="⌀" FontSize="28"
+        Background="LightPink" Foreground="DarkSlateBlue" BorderThickness="0" Opacity="0.6"
+        Click="btnDelete_Click" />
     </Grid>
 </UserControl>

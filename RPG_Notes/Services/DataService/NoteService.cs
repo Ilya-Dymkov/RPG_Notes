@@ -32,9 +32,11 @@ public class NoteService : IDataService<int, Note>
         var note = await GetAsync(value.Id);
 
         if (note != null)
-            _dbContext.Notes.Remove(note);
+            note.Text = value.Text;
+        else
+            await _dbContext.AddAsync(value);
 
-        await AddAsync(value);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(int id, int listId, string text) =>

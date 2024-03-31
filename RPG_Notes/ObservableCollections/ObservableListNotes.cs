@@ -15,20 +15,34 @@ public class ObservableListNotes : IDataService<int, Note>
     {
         ListInfo = listInfo;
 
-        Notes = [];
         FillNotes();
     }
 
     public ListNotes ListInfo { get; }
-    public ObservableCollection<NoteView> Notes { get; }
 
+    public ObservableCollection<NoteView> Notes { get; private set; } = [];
+
+    private ListNotesView _listNotesView;
     private readonly NoteService _service = new();
 
-    private async void FillNotes()
+    private async Task FillNotes()
     {
         await foreach (var note in _service.GetAllAsync()
-                                               .Where(n => n.ListId == ListInfo.Id))
-            Notes.Add(new() { ThisNote = note });
+                                           .Where(n => n.ListId == ListInfo.Id))
+            Notes.Add(new() { ThisNote = note, ControlList = this });
+    }
+
+    private async Task ViewListNotes() =>
+        await _listNotesView.ViewList(Notes);
+
+    public void AddNotesView(ListNotesView notesView) =>
+        _listNotesView = notesView;
+
+    public async Task ReloadNotes()
+    {
+        Notes = [];
+        await FillNotes();
+        await ViewListNotes();
     }
 
     public IAsyncEnumerable<Note> GetAllAsync() =>
@@ -40,19 +54,15 @@ public class ObservableListNotes : IDataService<int, Note>
     public async Task AddAsync(Note value)
     {
         var task = _service.AddAsync(value);
-        Notes.Add(new() { ThisNote = value });
+        Notes.Add(new() { ThisNote = value, ControlList = this });
         await task;
     }
 
     public async Task AddAsync(int listId, string text) =>
         await AddAsync(new(((await GetAllAsync().LastOrDefaultAsync())?.Id ?? 0) + 1, listId, text));
 
-    public async Task UpdateAsync(Note value)
-    {
-        var task = _service.UpdateAsync(value);
-        Notes[Notes.IndexOf(Notes.First(n => n.ThisNote.Id == value.Id))] = new() { ThisNote = value };
-        await task;
-    }
+    public async Task UpdateAsync(Note value) =>
+        await _service.UpdateAsync(value);
 
     public async Task UpdateAsync(int id, int listId, string text) =>
         await UpdateAsync(new(id, listId, text));

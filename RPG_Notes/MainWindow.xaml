@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RPG_Notes" xmlns:usercontrols="clr-namespace:RPG_Notes.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="330">
+        Title="MainWindow" Height="575" Width="425"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
         <usercontrols:ListListsNotesView />
     </Grid>

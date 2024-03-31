@@ -8,14 +8,15 @@
              d:DesignHeight="50" d:DesignWidth="400">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="340" />
             <ColumnDefinition Width="30" />
             <ColumnDefinition Width="30" />
         </Grid.ColumnDefinitions>
 
-        <TextBox Name="txtInput" VerticalContentAlignment="Center"
-                 FontSize="22" FontWeight="Light" Background="Transparent"
+        <TextBox Name="txtInput" FontSize="22" FontWeight="Light"
+                 Background="Transparent" VerticalAlignment="Center"
                  TextChanged="txtInput_TextChanged" />
+        
         <TextBlock Name="tbPlaceholder" Text="Enter note" FontSize="22" FontWeight="Light"
                    VerticalAlignment="Center" Margin="5 0 0 0" Panel.ZIndex="-1" />
 

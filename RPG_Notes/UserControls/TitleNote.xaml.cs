@@ -32,6 +32,16 @@ public partial class TitleNote : UserControl, INotifyPropertyChanged
         }
     }
 
+    private async void btnReload_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        await ListNotes.ReloadNotes();
+    }
+
+    private void btnSetting_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+
+    }
+
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }

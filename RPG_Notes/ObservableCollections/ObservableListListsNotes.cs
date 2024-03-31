@@ -13,11 +13,10 @@ public class ObservableListListsNotes : IDataService<int, ListNotes>
 {
     public ObservableListListsNotes()
     {
-        Lists = [];
         FillLists();
     }
 
-    public ObservableCollection<ListNotesView> Lists { get; }
+    public ObservableCollection<ListNotesView> Lists { get; } = [];
 
     private readonly ListNotesService _service = new();
 
@@ -43,12 +42,8 @@ public class ObservableListListsNotes : IDataService<int, ListNotes>
     public async Task AddAsync(string name) =>
         await AddAsync(new ListNotes(((await GetAllAsync().LastOrDefaultAsync())?.Id ?? 0) + 1, name));
 
-    public async Task UpdateAsync(ListNotes value)
-    {
-        var task = _service.UpdateAsync(value);
-        Lists[Lists.IndexOf(Lists.First(l => l.Notes.ListInfo.Id == value.Id))] = new() { Notes = new(value) };
-        await task;
-    }
+    public async Task UpdateAsync(ListNotes value) =>
+        await _service.UpdateAsync(value);
 
     public async Task UpdateAsync(int id, string name) =>
         await UpdateAsync(new(id, name));

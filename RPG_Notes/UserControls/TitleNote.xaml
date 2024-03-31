@@ -12,8 +12,32 @@
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="25" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                    Text="{Binding ListNotes.ListInfo.Name}" FontSize="28"></TextBlock>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Button x:Name="btnSetting" Content="⚙️" FontSize="20"
+                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+                        Background="Transparent" BorderBrush="Transparent" Padding="0"
+                        Margin="-4, -4, -4, -3" Click="btnSetting_Click" />
+
+                <Button x:Name="btnReload" Grid.Row="1" Content="🔄️" FontSize="20"
+                        VerticalContentAlignment="Top" HorizontalContentAlignment="Left"
+                        Background="Transparent" BorderBrush="Transparent" Padding="0" Margin="-4"
+                        Panel.ZIndex="-1" Click="btnReload_Click" />
+            </Grid>
+        </Grid>
 
         <local:EnterNote x:Name="EnterNote" Grid.Row="1" />
     </Grid>

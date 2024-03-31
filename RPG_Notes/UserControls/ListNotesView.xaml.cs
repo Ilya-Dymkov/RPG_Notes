@@ -1,6 +1,8 @@
 ﻿using RPG_Notes.ObservableCollections;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace RPG_Notes.UserControls;
@@ -26,11 +28,15 @@ public partial class ListNotesView : UserControl, INotifyPropertyChanged
         set
         {
             notes = value;
-            TitleNote.ListNotes = value;
+            notes.AddNotesView(this);
+            TitleNote.ListNotes = notes;
 
             OnPropertyChanged();
         }
     }
+
+    public async Task ViewList<TNote>(ObservableCollection<TNote> noteViews) =>
+        await Task.FromResult(lvNotes.ItemsSource = noteViews);
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
