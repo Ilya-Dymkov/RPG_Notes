@@ -14,6 +14,8 @@ public partial class TitleNote : UserControl, INotifyPropertyChanged
     {
         DataContext = this;
         InitializeComponent();
+
+        lsPanel.Title = this;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -37,9 +39,20 @@ public partial class TitleNote : UserControl, INotifyPropertyChanged
         await ListNotes.ReloadNotes();
     }
 
+    private bool _settingVisible = false;
+
     private void btnSetting_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-
+        if (_settingVisible)
+        {
+            lsPanel.Visibility = System.Windows.Visibility.Hidden;
+            _settingVisible = false;
+        }
+        else
+        {
+            lsPanel.Visibility = System.Windows.Visibility.Visible;
+            _settingVisible = true;
+        }
     }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>

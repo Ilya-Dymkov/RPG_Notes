@@ -11,10 +11,13 @@ namespace RPG_Notes.UserControls;
 /// </summary>
 public partial class NoteView : UserControl, INotifyPropertyChanged
 {
-    public NoteView()
+    public NoteView(ObservableListNotes listNotes, Note note)
     {
         DataContext = this;
         InitializeComponent();
+
+        ControlList = listNotes;
+        ThisNote = note;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

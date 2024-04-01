@@ -11,25 +11,28 @@ namespace RPG_Notes.ObservableCollections;
 
 public class ObservableListNotes : IDataService<int, Note>
 {
-    public ObservableListNotes(ListNotes listInfo)
+    public ObservableListNotes(ObservableListListsNotes ownerList, ListNotes listInfo)
     {
+        OwnerList = ownerList;
         ListInfo = listInfo;
 
         FillNotes();
     }
 
+    public ObservableListListsNotes OwnerList { get; }
     public ListNotes ListInfo { get; }
 
     public ObservableCollection<NoteView> Notes { get; private set; } = [];
 
     private ListNotesView _listNotesView;
+
     private readonly NoteService _service = new();
 
     private async Task FillNotes()
     {
         await foreach (var note in _service.GetAllAsync()
                                            .Where(n => n.ListId == ListInfo.Id))
-            Notes.Add(new() { ThisNote = note, ControlList = this });
+            Notes.Add(new(this, note));
     }
 
     private async Task ViewListNotes() =>
@@ -54,7 +57,7 @@ public class ObservableListNotes : IDataService<int, Note>
     public async Task AddAsync(Note value)
     {
         var task = _service.AddAsync(value);
-        Notes.Add(new() { ThisNote = value, ControlList = this });
+        Notes.Add(new(this, value));
         await task;
     }
 

@@ -23,7 +23,7 @@ public class ObservableListListsNotes : IDataService<int, ListNotes>
     private async void FillLists()
     {
         foreach (var list in await _service.GetAllAsync().ToHashSetAsync())
-            Lists.Add(new() { Notes = new(list) });
+            Lists.Add(new(new(this, list)));
     }
 
     public IAsyncEnumerable<ListNotes> GetAllAsync() =>
@@ -35,7 +35,7 @@ public class ObservableListListsNotes : IDataService<int, ListNotes>
     public async Task AddAsync(ListNotes value)
     {
         var task = _service.AddAsync(value);
-        Lists.Add(new() { Notes = new(value) });
+        Lists.Add(new(new(this, value)));
         await task;
     }
 
